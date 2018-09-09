@@ -12,11 +12,12 @@ namespace LauncherWindowsForms
 {
     public partial class Launcher : Form
     {
-        private string arguments = null;
         private string finalarguments = null;
         private string fp = null;
         private string customprms = null;
         private string mods = null;
+        private string skipintro = null;
+        private string nosplash = null;
 
         public Launcher()
         {
@@ -42,12 +43,28 @@ namespace LauncherWindowsForms
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            arguments += " -nosplash";
+            nosplash = null;
+            if (checkBox1.Checked == true)
+            {
+                nosplash += " -nosplash";
+            }
+            else if (!checkBox1.Checked == true)
+            {
+                nosplash += "";
+            }
         }
 
         private void SkipIntro_CheckedChanged(object sender, EventArgs e)
         {
-            arguments += " -skipintro";
+            skipintro = null;
+            if (SkipIntro.Checked == true)
+            {
+                skipintro += " -skipintro";
+            }
+            else if (!SkipIntro.Checked == true)
+            {
+                skipintro += "";
+            }
         }
 
         public void CheckForFilePatching()
@@ -95,14 +112,19 @@ namespace LauncherWindowsForms
 
         public void  CheckAddonsList()
         {
-            mods = "-mod=";
-            // Next show the object title and check state for each item selected.
-            foreach (object itemChecked in AddonList.CheckedItems)
+            if (AddonList.CheckedItems.Count == 0)
+            { }
+            else
             {
-                // Use the IndexOf method to get the index of an item.
-                mods += itemChecked.ToString();
-                mods += ";";
-                //System.IO.Directory.GetDirectories;
+                mods = "-mod=";
+                // Next show the object title and check state for each item selected.
+                foreach (object itemChecked in AddonList.CheckedItems)
+                {
+                    // Use the IndexOf method to get the index of an item.
+                    mods += itemChecked.ToString();
+                    mods += ";";
+                    //System.IO.Directory.GetDirectories;
+                }
             }
         }
         private void LaunchGame_Click(object sender, EventArgs e)
@@ -113,8 +135,8 @@ namespace LauncherWindowsForms
                 CheckAddonsList();
                 CheckForFilePatching();
                 CustomParamsGet();
-                finalarguments = mods + arguments + fp + customprms;
-                System.Diagnostics.Process.Start("D:\\Games\\Steam\\steamapps\\common\\Arma 3\\arma3_x64.exe", finalarguments);
+                finalarguments = mods + nosplash + skipintro + fp + customprms;
+                System.Diagnostics.Process.Start("steam://rungameid/107410", finalarguments);
             }
             catch (Exception)
             {
