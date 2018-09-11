@@ -61,7 +61,7 @@ namespace LauncherWindowsForms
             {
                 skipintro += " -skipintro";
             }
-            else if (!SkipIntro.Checked == true)
+            else if (SkipIntro.Checked == false)
             {
                 skipintro += "";
             }
@@ -74,7 +74,7 @@ namespace LauncherWindowsForms
             {
                 fp += " -FilePatching";
             }
-            else if (!FilePatching.Checked == true)
+            else if (FilePatching.Checked == false)
             {
                 fp += " -noFilePatching";
             }
@@ -96,12 +96,9 @@ namespace LauncherWindowsForms
                     AddonList.Items.Clear();
                     while (!sr.EndOfStream)
                     {
-                        for (int i = 0; i < 4; i++)
-                        {
-                            string strListItem = sr.ReadLine();
-                            if (!String.IsNullOrEmpty(strListItem))
-                                AddonList.Items.Add(strListItem);
-                        }
+                        string strListItem = sr.ReadLine();
+                        if (!String.IsNullOrEmpty(strListItem))
+                            AddonList.Items.Add(strListItem);
                     }
                 }
             }
