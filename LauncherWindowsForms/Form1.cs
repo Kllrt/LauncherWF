@@ -48,7 +48,7 @@ namespace LauncherWindowsForms
             {
                 nosplash += " -nosplash";
             }
-            else if (!checkBox1.Checked == true)
+            else if (checkBox1.Checked == false)
             {
                 nosplash += "";
             }
